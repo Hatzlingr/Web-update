@@ -3,7 +3,9 @@ let prevScrollPos = window.pageYOffset;
 window.addEventListener('scroll', function () {
     const currentScrollPos = window.pageYOffset;
 
-    if (prevScrollPos > currentScrollPos) {
+    if (currentScrollPos == 0) {
+        document.querySelector('.navbar').classList.add('show');
+    } else if (prevScrollPos > currentScrollPos) {
         document.querySelector('.navbar').classList.add('show');
     } else {
         document.querySelector('.navbar').classList.remove('show');
@@ -99,69 +101,8 @@ function eraseText() {
 window.onload = typeWriter;
 
 
-// Carousel
-const track = document.querySelector('.carousel-track');
-const slides = Array.from(track.children);
-const nextButton = document.querySelector('.next-btn');
-const prevButton = document.querySelector('.prev-btn');
 
-let currentIndex = 1; // Mulai dari slide pertama asli
-const slideWidth = slides[0].getBoundingClientRect().width;
-
-// Clone slide pertama dan terakhir
-const firstClone = slides[0].cloneNode(true);
-const lastClone = slides[slides.length - 1].cloneNode(true);
-
-// Tambahkan clone ke track
-track.appendChild(firstClone);
-track.insertBefore(lastClone, slides[0]);
-
-// Perbarui daftar slides dengan clones
-const updatedSlides = Array.from(track.children);
-
-// Atur posisi awal slider
-track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-
-// Fungsi untuk memindahkan slider
-const moveToSlide = (index, smooth = true) => {
-    track.style.transition = smooth ? "transform 0.5s ease-in-out" : "none";
-    track.style.transform = `translateX(-${index * slideWidth}px)`;
-    currentIndex = index;
-};
-
-// Fungsi untuk menangani loop
-const handleInfiniteLoop = () => {
-    if (currentIndex === 0) {
-        // Jika di clone terakhir, lompat ke slide terakhir asli
-        moveToSlide(updatedSlides.length - 2, false);
-    }
-    if (currentIndex === updatedSlides.length - 1) {
-        // Jika di clone pertama, lompat ke slide pertama asli
-        moveToSlide(1, false);
-    }
-};
-
-// Event listeners untuk tombol
-nextButton.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % updatedSlides.length; // Loop slide
-    moveToSlide(currentIndex);
-});
-
-prevButton.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + updatedSlides.length) % updatedSlides.length; // Loop slide
-    moveToSlide(currentIndex);
-});
-
-// Event listener untuk menangani transisi loop
-track.addEventListener('transitionend', handleInfiniteLoop);
-
-// Auto-play functionality
-let autoPlay = setInterval(() => {
-    currentIndex = (currentIndex + 1) % updatedSlides.length;
-    moveToSlide(currentIndex);
-}, 3000); // Change every 3 seconds
-
-// da
+//skill progress bar
 document.addEventListener('DOMContentLoaded', () => {
     const skillBars = document.querySelectorAll('.skill-progress');
 
@@ -176,44 +117,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const animateSkillBars = () => {
-        skillBars.forEach((skillBar) => { // Mengganti nama parameter
+        skillBars.forEach((skillBar) => { 
             if (isInViewPort(skillBar)) {
                 const percent = skillBar.getAttribute("data-percent");
                 skillBar.style.setProperty("--percent", `${percent}%`);
                 skillBar.classList.add("animate");
                 setTimeout(() => {
-                    skillBar.style.width = `${percent}%`; // Menambahkan % untuk style.width
+                    skillBar.style.width = `${percent}%`; 
                 }, 1000);
             }
         });
     };
-
-    // Jalankan animasi saat halaman dimuat
     animateSkillBars();
-
-    // Tambahkan event listener untuk scroll
     window.addEventListener('scroll', animateSkillBars);
 });
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    const footer = document.querySelector('.footer');
-    const socialIcons = document.querySelectorAll('.social-icon');
-
-    // Animate social icons on hover
-    socialIcons.forEach((icon) => {
-        icon.addEventListener('mouseover', () => {
-            icon.style.transform = 'scale(1.2)';
-        });
-
-        icon.addEventListener('mouseout', () => {
-            icon.style.transform = 'scale(1)';
-        });
-    });
-
-    // Change footer color on scroll
-    
-});
 
 
   
