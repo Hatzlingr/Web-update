@@ -3,9 +3,7 @@ let prevScrollPos = window.pageYOffset;
 window.addEventListener('scroll', function () {
     const currentScrollPos = window.pageYOffset;
 
-    if (currentScrollPos == 0) {
-        document.querySelector('.navbar').classList.add('show');
-    } else if (prevScrollPos > currentScrollPos) {
+    if (prevScrollPos > currentScrollPos) {
         document.querySelector('.navbar').classList.add('show');
     } else {
         document.querySelector('.navbar').classList.remove('show');
